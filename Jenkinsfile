@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
@@ -17,7 +16,20 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t campusfind:latest .'
+                bat 'docker build -t chaitanyaa15/campusfind:latest .'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    bat 'echo %DOCKER_PASSWORD% | docker login -u "%DOCKER_USERNAME%" --password-stdin'
+                    bat 'docker push chaitanyaa15/campusfind:latest'
+                }
             }
         }
     }
