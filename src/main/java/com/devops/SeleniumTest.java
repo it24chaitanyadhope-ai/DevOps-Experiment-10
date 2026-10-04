@@ -75,13 +75,22 @@ public class SeleniumTest {
                     By.cssSelector("#report button[type='submit']")
             ).click();
 
-            // Wait for submitted item to appear
+            // Wait briefly for the page to update
             WebDriverWait wait =
                     new WebDriverWait(driver, Duration.ofSeconds(5));
 
+            wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.id("itemsList")
+            ));
+
+            // Clear the previous Backpack search
+            driver.findElement(By.id("searchInput")).clear();
+            driver.findElement(By.id("searchButton")).click();
+
+            // Wait for the newly reported item to appear
             wait.until(
                     ExpectedConditions.textToBePresentInElementLocated(
-                            By.tagName("body"),
+                            By.id("itemsList"),
                             "Blue Water Bottle"
                     )
             );
@@ -97,7 +106,7 @@ public class SeleniumTest {
             System.out.println("SELENIUM TEST FAILED");
             e.printStackTrace();
 
-            // Make Jenkins fail if Selenium test fails
+            // Make Jenkins fail if Selenium fails
             System.exit(1);
 
         } finally {
