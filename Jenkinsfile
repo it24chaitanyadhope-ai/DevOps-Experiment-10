@@ -2,9 +2,17 @@ pipeline {
     agent any
 
     stages {
+
         stage('Build') {
             steps {
                 bat 'mvn clean package'
+            }
+        }
+
+        stage('Start Application') {
+            steps {
+                bat 'start "CampusFind" /B java -cp target/classes com.devops.App'
+                bat 'timeout /t 5 /nobreak > nul'
             }
         }
 
