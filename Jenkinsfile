@@ -11,8 +11,8 @@ pipeline {
 
         stage('Start Application') {
             steps {
-                bat 'start "CampusFind" /B java -cp target/classes com.devops.App'
-                bat 'timeout /t 5 /nobreak > nul'
+                bat 'start "" /B java -cp target/classes com.devops.App'
+                bat 'powershell -NoProfile -Command "Start-Sleep -Seconds 5"'
             }
         }
 
