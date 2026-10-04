@@ -946,6 +946,8 @@ public class App {
 
                               event.target.reset();
 
+                              document.getElementById("searchInput").value = "";
+
                               showPage("find");
                               searchItem();
                             }
