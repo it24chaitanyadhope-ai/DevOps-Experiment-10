@@ -916,40 +916,39 @@ public class App {
 
                         /* REPORT FUNCTION */
 
-                        function submitReport(event) {
+                       function submitReport(event) {
+                             event.preventDefault();
 
-                            event.preventDefault();
+                             const itemName = document.getElementById("itemName").value;
+                             const category = document.getElementById("itemCategory").value;
+                             const itemLocation = document.getElementById("location").value;
+                             const status = document.getElementById("status").value;
 
+                             const reference = "CF-" + Math.floor(1000 + Math.random() * 9000);
 
-                            const itemName =
-                                document
-                                    .getElementById("itemName")
-                                    .value;
+                             const card = document.createElement("div");
+                             card.className = "item-card";
+                             card.setAttribute("data-name", itemName.toLowerCase());
+                             card.setAttribute("data-category", category);
 
+                             card.innerHTML =
+                             "<h3>📦 " + itemName + "</h3>" +
+                             "<p><strong>Location:</strong> " + itemLocation + "</p>" +
+                             "<p><strong>Date:</strong> 04 Oct 2026</p>" +
+                             "<span class='tag'>" + status + "</span>";
 
-                            const reference =
-                                "CF-" +
-                                Math.floor(
-                                    1000 + Math.random() * 9000
-                                );
+                              document.getElementById("itemsList").appendChild(card);
 
+                              document.getElementById("message").style.display = "block";
+                              document.getElementById("message").innerHTML =
+                             "Report submitted successfully! Reference ID: <strong>" +
+                              reference + "</strong>";
 
-                            const message =
-                                document.getElementById("message");
+                              event.target.reset();
 
-
-                            message.style.display = "block";
-
-
-                            message.innerHTML =
-                                "Report submitted successfully! " +
-                                "Reference ID: <strong>" +
-                                reference +
-                                "</strong>";
-
-
-                        }
-
+                              showPage("find");
+                              searchItem();
+                            }
 
                     </script>
 
